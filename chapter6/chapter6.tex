@@ -1,0 +1,77 @@
+\documentclass{article}
+\usepackage{amssymb}
+\begin{document}
+	\paragraph{Exercise 1} ~\\
+	\begin{table}[h!]
+		\begin{tabular}{| l | l | l | l | l |}
+			\hline
+			$A$ & $B$ & $A \rightarrow B$ & $\neg A \lor B$ & $\neg(A \land \neg B)$\\ \hline
+			0 & 0 & 1 & 1 & 1\\
+			0 & 1 & 1 & 1 & 1\\
+			1 & 0 & 0 & 0 & 0\\
+			1 & 1 & 1 & 1 & 1\\
+			\hline
+		\end{tabular}
+	\end{table}
+	\paragraph{Exercise 2} ~\\
+	\begin{table}[h!]
+		\begin{tabular}{| l | l | l | l | l | l |}
+			\hline
+			$A$ & $B$ & $C$ & $A \rightarrow B$ & $B \land C \rightarrow A$ & $(A \rightarrow B) \land (B \land C \rightarrow A)$\\ \hline
+			0 & 0 & 0 & 1 & 1 & 1\\
+			0 & 1 & 0 & 1 & 1 & 1\\
+			1 & 0 & 0 & 0 & 1 & 0\\
+			1 & 1 & 0 & 1 & 1 & 1\\
+			0 & 0 & 1 & 1 & 1 & 1\\
+			0 & 1 & 1 & 1 & 0 & 0\\
+			1 & 0 & 1 & 0 & 1 & 0\\
+			1 & 1 & 1 & 1 & 1 & 1\\
+			\hline
+		\end{tabular}
+	\end{table}
+	\paragraph{Exercise 3} ~\\
+	\begin{table}[h!]
+		\begin{tabular}{| l | l | l | l |}
+			\hline
+			$A$ & $B$ & $A \rightarrow B$ & $\neg B \rightarrow \neg A$\\ \hline
+			0 & 0 & 1 & 1\\
+			0 & 1 & 1 & 1\\
+			1 & 0 & 0 & 0\\
+			1 & 1 & 1 & 1\\
+			\hline
+		\end{tabular}
+	\end{table}
+	\pagebreak
+	\paragraph{Exercise 4} ~\\
+	\begin{table}[h!]
+		\begin{tabular}{| l | l | l | l | l | l |}
+			\hline
+			$A$ & $B$ & $C$ & $A \rightarrow B \lor C$ & $\neg B \rightarrow \neg C$ & $A \rightarrow B$\\ \hline
+			0 & 0 & 0 & 1 & 1 & 1\\
+			0 & 1 & 0 & 1 & 1 & 1\\
+			1 & 0 & 0 & 0 & 1 & 0\\
+			1 & 1 & 0 & 1 & 1 & 1\\
+			0 & 0 & 1 & 1 & 0 & 1\\
+			0 & 1 & 1 & 1 & 1 & 1\\
+			1 & 0 & 1 & 1 & 0 & 0\\
+			1 & 1 & 1 & 1 & 1 & 1\\
+			\hline
+		\end{tabular}
+	\end{table}
+	\begin{table}[h!]
+		\begin{tabular}{| l | l | l | l | l | l |}
+			\hline
+			$A$ & $B$ & $C$ & $A \rightarrow B \lor C$ & $\neg B \rightarrow \neg C$ & $A \rightarrow B$\\ \hline
+			0 & 0 & 0 & 1 & 1 & 1\\
+			0 & 1 & 0 & 1 & 1 & 1\\
+			1 & 1 & 0 & 1 & 1 & 1\\
+			0 & 1 & 1 & 1 & 1 & 1\\
+			1 & 1 & 1 & 1 & 1 & 1\\
+			\hline
+		\end{tabular}
+	\end{table} \\
+	$\therefore \{A\rightarrow B \lor C, \neg B\rightarrow \neg C\} \vDash A\rightarrow B$
+	\paragraph{Exercise 5} ~\\
+	2: $(\neg A \rightarrow \neg B)\rightarrow (A \rightarrow B) = 0$ when $A = 1, B = 0$ \\
+	3: $((P \land Q) \rightarrow R) \rightarrow (R \lor \neg P) = 0$ when $P=1, Q=0, R=0$
+\end{document}

@@ -92,3 +92,109 @@ section
       have Bx: B x, from h₁ x this,
       exists.intro x Bx
 end
+
+section
+
+  example: ∀(x:U) y z, x = z → z = y → x = y :=
+   assume x y z (h₁: x = z) (h₂: z = y),
+   calc
+    x = z: h₁
+    ... = y: by rw h₂
+end
+
+section
+  variables x y : U
+  variable h₁: ∀(x: U), x = x
+  variable h₂: ∀(u:U) v w, u = w → v = w → u = v
+
+  example: x = y → y = x :=
+    assume h,
+    have y = y, from h₁ y,
+    show y = x, from (h₂ y x y) ‹y = y› h
+end
+
+section
+  example: (¬∃x,A x ∧ B x) ↔ (∀x,A x → ¬B x) :=
+    have h₁: (¬∃x,A x ∧ B x) → (∀x,A x → ¬B x), from
+      assume h,
+      assume x,
+      assume Ax,
+      show ¬B x, from
+        assume Bx,
+        have Ax_and_Bx: A x ∧ B x, from and.intro Ax Bx,
+        have ∃x, A x ∧ B x, from exists.intro x Ax_and_Bx,
+        show false, from h this,
+    have h₂: (∀x,A x → ¬B x) → (¬∃x,A x ∧ B x) , from
+      assume h,
+      show ¬∃x,A x ∧ B x, from
+        assume h_ex,
+        show false, from exists.elim h_ex $
+          assume x (Ax_and_Bx: A x ∧ B x),
+          have Ax: A x, from and.left Ax_and_Bx,
+          have Bx: B x, from and.right Ax_and_Bx,
+          have Ax_imp_nBx: A x → ¬B x, from h x,
+          have nBx: ¬B x, from Ax_imp_nBx Ax,
+          show false, from nBx Bx,
+    iff.intro h₁ h₂
+end
+
+section
+  open classical
+
+  example: (¬∀x, A x → B x) ↔ (∃x, A x ∧ ¬B x) :=
+    have h₁: (¬∀x, A x → B x) → (∃x, A x ∧ ¬B x), from
+      assume h,
+      show ∃x, A x ∧ ¬B x, from by_contradiction $
+        assume h_nex: ¬∃x, A x ∧ ¬B x,
+        show false, from
+          have ∀x, A x → B x, from
+            assume x,
+            assume Ax,
+            show B x, from by_contradiction $
+              assume nBx,
+              have A x ∧ ¬B x, from and.intro Ax nBx,
+              have h_ex: ∃x, A x ∧ ¬B x, from exists.intro x this,
+              show false, from h_nex h_ex,
+          show false, from h this,
+    have h₂: (∃x, A x ∧ ¬B x) → (¬∀x, A x → B x) :=
+      assume h,
+      assume h_all,
+      show false, from
+        exists.elim h $
+          assume x (Ax_and_nBx: A x ∧ ¬B x),
+          have Ax_imp_Bx: A x → B x, from h_all x,
+          have A x, from and.left Ax_and_nBx,
+          have Bx: B x, from Ax_imp_Bx this,
+          have nBx: ¬B x, from and.right Ax_and_nBx,
+          show false, from nBx Bx,
+    iff.intro h₁ h₂
+end
+
+section
+  example(h:∃x, A x ∧ ∀y, A y → y = x): ∃x, A x ∧ ∀y,∀z, A y ∧ A z → y = z :=
+    exists.elim h $
+      assume x (h₁: A x ∧ ∀y, A y → y = x),
+      have Ax: A x, from and.left h₁,
+      have all_A_imp_eq_x: ∀y, A y → y = x, from and.right h₁,
+      have ∀y,∀z, A y ∧ A z → y = z, from
+        assume (y:U) (z:U) (Ay_and_Az: A y ∧ A z),
+        have Ay_imp_y_eq_x: A y → y = x, from all_A_imp_eq_x y,
+        have Az_imp_z_eq_x: A z → z = x, from all_A_imp_eq_x z,
+        have A y, from and.left Ay_and_Az,
+        have y_eq_x: y = x, from Ay_imp_y_eq_x this,
+        have A z, from and.right Ay_and_Az,
+        have z_eq_x: z = x, from Az_imp_z_eq_x this,
+        show y = z, by rw [y_eq_x, z_eq_x],
+      exists.intro x (and.intro Ax this)
+    
+  example(h:∃x, A x ∧ ∀y,∀z, A y ∧ A z → y = z): ∃x, A x ∧ ∀y, A y → y = x :=
+    exists.elim h $
+      assume x (h₁: A x ∧ ∀y,∀z, A y ∧ A z → y = z),
+      have Ax: A x, from and.left h₁,
+      have h₂: ∀y,∀z, A y ∧ A z → y = z, from and.right h₁,
+      have ∀y, A y → y = x, from
+        assume y Ay,
+        have A y ∧ A x → y = x, from h₂ y x,
+        show y = x, from this (and.intro Ay Ax),
+      exists.intro x (and.intro Ax this)
+end

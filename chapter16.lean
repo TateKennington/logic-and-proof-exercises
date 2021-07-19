@@ -2,7 +2,6 @@ import data.set data.int.basic data.set
 open function int set
 
 section
-  def f (x : ℤ) : ℤ := x + 3
   def g (x : ℤ) : ℤ := -x
   def h (x : ℤ) : ℤ := 2 * x + 3
 
